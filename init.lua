@@ -1,19 +1,11 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true -- Set to true if you have a Nerd Font installed and selected in the terminal
 
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true -- Relative line numbers
 
 -- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
@@ -37,6 +29,13 @@ vim.opt.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+vim.opt.tabstop = 4 -- make tab 4 spaces instead of 8
+vim.opt.shiftwidth = 4 -- match indent hotkey with tabstop setting
+vim.opt.scrolloff = 999 -- scroll off the end of the page
+vim.opt.virtualedit = 'block' -- when in visual block mode, allow the cursor to extend past the last char
+vim.opt.termguicolors = true -- use full color palette, 24bit colors
+vim.o.undofile = true -- save undo history
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -83,6 +82,10 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>e', '<CMD>:lua MiniFiles.open()<CR>', { desc = 'Open file browser' })
 vim.keymap.set('n', '<leader>w', '<CMD>:w<CR>', { desc = 'Save file' })
+
+-- Remove Keymap
+-- vim.keymap.del('n', '<D-S-N>')
+-- vim.keymap.del('n', '<C-S-K>')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -169,9 +172,10 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
+        { '<leader>p', group = 'S[p]lits' },
         -- { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
       }
     end,
   },
@@ -183,7 +187,7 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  { -- Fuzzy Finder (files, lsp, etc)
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -599,7 +603,14 @@ require('lazy').setup({
     config = function()
       require('mini.ai').setup { n_lines = 500 }
       require('mini.surround').setup()
-      require('mini.files').setup()
+      local minifiles = require 'mini.files'
+
+      vim.keymap.set('n', '<leader>e', function()
+        local currentbuffer = vim.api.nvim_buf_get_name(0)
+        minifiles.open(currentbuffer)
+      end, { desc = 'fil[e] browser' })
+
+      minifiles.setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
