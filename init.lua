@@ -49,12 +49,7 @@ vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -65,16 +60,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -82,6 +67,15 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>e', '<CMD>:lua MiniFiles.open()<CR>', { desc = 'Open file browser' })
 vim.keymap.set('n', '<leader>w', '<CMD>:w<CR>', { desc = 'Save file' })
+
+vim.keymap.set('n', '<leader>tv', '<CMD>:vsplit<CR>', { desc = 'Split [V]ertically' })
+vim.keymap.set('n', '<leader>th', '<CMD>:split<CR>', { desc = 'Split [V]ertically' })
+vim.keymap.set('n', '<leader>tt', '<CMD>:wincmd w<CR>', { desc = 'Cycle Splits' })
+
+vim.keymap.set('n', '<leader>t<Up>', '<CMD>:wincmd k<CR>', { desc = 'Go to Top Split' })
+vim.keymap.set('n', '<leader>t<Down>', '<CMD>:wincmd j<CR>', { desc = 'Go to Bottom Split' })
+vim.keymap.set('n', '<leader>t<Left>', '<CMD>:wincmd h<CR>', { desc = 'Go to Left Split' })
+vim.keymap.set('n', '<leader>t<Right>', '<CMD>:wincmd l<CR>', { desc = 'Go to Right Split' })
 
 -- Remove Keymap
 -- vim.keymap.del('n', '<D-S-N>')
@@ -172,9 +166,9 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
-        { '<leader>p', group = 'S[p]lits' },
+        { '<leader>t', group = 'Spli[t]s' },
         -- { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
+        -- { '<leader>t', group = '[T]oggle' },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
       }
     end,
@@ -358,14 +352,10 @@ require('lazy').setup({
             })
           end
 
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them
-          --
-          -- This may be unwanted, since they displace some of your code
           if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map('<leader>th', function()
+            map('<leader>uh', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
+            end, 'Toggle Inlay [H]ints')
           end
         end,
       })
