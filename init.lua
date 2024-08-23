@@ -77,6 +77,11 @@ vim.keymap.set('n', '<leader>t<Down>', '<CMD>:wincmd j<CR>', { desc = 'Go to Bot
 vim.keymap.set('n', '<leader>t<Left>', '<CMD>:wincmd h<CR>', { desc = 'Go to Left Split' })
 vim.keymap.set('n', '<leader>t<Right>', '<CMD>:wincmd l<CR>', { desc = 'Go to Bottom Split' })
 
+vim.keymap.set('n', '<leader>xx', '<CMD>:wq<CR>', { desc = 'Save and Close' })
+vim.keymap.set('n', '<leader>xz', '<CMD>:q<CR>', { desc = 'Close without Saving' })
+vim.keymap.set('n', '<leader>xa', '<CMD>:wqa!<CR>', { desc = 'Close and Save [A]ll' })
+vim.keymap.set('n', '<leader>xq', '<CMD>:qa!<CR>', { desc = 'Close [A]ll' })
+
 -- Remove Keymap
 -- vim.keymap.del('n', '<D-S-N>')
 -- vim.keymap.del('n', '<C-S-K>')
@@ -167,9 +172,8 @@ require('lazy').setup({
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = 'Spli[t]s' },
-        -- { '<leader>w', group = '[W]orkspace' },
-        -- { '<leader>t', group = '[T]oggle' },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
+        { '<leader>x', group = 'Close' },
       }
     end,
   },
@@ -319,7 +323,7 @@ require('lazy').setup({
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
           map('<leader>sd', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
           map('<leader>sw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>cr', vim.lsp.buf.rename, '[R]ename Symbol')
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
