@@ -597,7 +597,21 @@ require('lazy').setup({
         minifiles.open(currentbuffer)
       end, { desc = 'fil[e] browser' })
 
-      minifiles.setup()
+      minifiles.setup {
+        mappings = {
+          close = 'q',
+          go_in = '<Right>',
+          go_in_plus = 'L',
+          go_out = '<Left>',
+          go_out_plus = 'H',
+          reset = '<BS>',
+          reveal_cwd = '@',
+          show_help = 'g?',
+          synchronize = '=',
+          trim_left = '<',
+          trim_right = '>',
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
