@@ -1,39 +1,47 @@
 return {
-  'stevearc/conform.nvim',
-  opts = {},
-  config = function()
-    local conform = require 'conform'
-
-    conform.setup {
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform will run multiple formatters sequentially
-        python = { 'isort', 'black' },
-        -- You can customize some of the format options for the filetype (:help conform.format)
-        rust = { 'rustfmt', lsp_format = 'fallback' },
-        -- Conform will run the first available formatter
-        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>cf',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
       },
+    },
+    opts = {
+      notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Disable autoformat for files in a certain path ("node_modules" in this case).
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
 
-        if bufname:match '/node_modules/' then
-          return
-        end
+        vim.lsp.buf.code_action {
+          apply = true,
+          context = {
+            only = { 'source.removeUnused.ts' },
+            diagnostics = {},
+          },
+        }
 
         return {
           timeout_ms = 500,
-          lsp_fallback = 'fallback',
+          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
         }
       end,
-    }
-
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = '*',
-      callback = function(args)
-        require('conform').format { bufnr = args.buf }
-      end,
-    })
-  end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      },
+    },
+  },
 }
