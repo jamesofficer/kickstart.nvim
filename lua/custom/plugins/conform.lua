@@ -24,7 +24,7 @@ return {
         vim.lsp.buf.code_action {
           apply = true,
           context = {
-            only = { 'source.removeUnused.ts' },
+            only = { 'source.removeUnusedImports.ts' },
             diagnostics = {},
           },
         }

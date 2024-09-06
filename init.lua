@@ -181,6 +181,7 @@ require('lazy').setup({
         { '<leader>u', group = '[U]ser Interface' },
         { '<leader>f', group = '[F]lutter' },
         { '<leader>u', group = '[U]ser Interface' },
+        { '<leader>p', group = '[P]inned Files ()' },
         { '<leader>x', group = 'Close' },
       }
     end,
@@ -558,7 +559,22 @@ require('lazy').setup({
     'echasnovski/mini.nvim',
     config = function()
       require('mini.ai').setup { n_lines = 500 }
-      require('mini.surround').setup()
+
+      require('mini.surround').setup {
+        mappings = {
+          add = 'Ea', -- Add surrounding in Normal and Visual modes
+          delete = 'Ed', -- Delete surrounding
+          find = 'Ef', -- Find surrounding (to the right)
+          find_left = 'EF', -- Find surrounding (to the left)
+          highlight = 'Eh', -- Highlight surrounding
+          replace = 'Er', -- Replace surrounding
+          update_n_lines = 'En', -- Update `n_lines`
+
+          suffix_last = 'l', -- Suffix to search with "prev" method
+          suffix_next = 'n', -- Suffix to search with "next" method
+        },
+      }
+
       local minifiles = require 'mini.files'
 
       vim.keymap.set('n', '<leader>e', function()
