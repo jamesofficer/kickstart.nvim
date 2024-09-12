@@ -68,7 +68,6 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<leader>e', '<CMD>:lua MiniFiles.open()<CR>', { desc = 'Open file browser' })
 vim.keymap.set('n', '<leader>w', '<CMD>:w<CR>', { desc = 'Save file' })
 
 vim.keymap.set('n', '<leader>tv', '<CMD>:vsplit<CR>', { desc = 'Split [V]ertically' })
@@ -86,6 +85,8 @@ vim.keymap.set('n', '<leader>xa', '<CMD>:wqa!<CR>', { desc = 'Close and Save [A]
 vim.keymap.set('n', '<leader>xq', '<CMD>:qa!<CR>', { desc = 'Close [A]ll' })
 
 vim.keymap.set('n', '<leader>uc', '<CMD>:Telescope colorscheme<CR>', { desc = '[C]olorschemes' })
+
+vim.keymap.set('n', '<leader>uy', ':%y+<CR>', { desc = 'Yank entire buffer to clipboard' })
 
 -- Remove Keymap
 -- vim.keymap.del('n', '<D-S-N>')
@@ -260,7 +261,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>se', builtin.resume, { desc = '[S]earch [R]esume' })
+      vim.keymap.set('n', '<leader>se', builtin.resume, { desc = '[S]earch Resum[e]' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -588,7 +589,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>e', function()
         local currentbuffer = vim.api.nvim_buf_get_name(0)
         minifiles.open(currentbuffer)
-      end, { desc = 'fil[e] browser' })
+      end, { desc = 'Fil[e] Browser' })
 
       minifiles.setup {
         mappings = {
