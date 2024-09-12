@@ -222,16 +222,15 @@ require('lazy').setup({
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
         defaults = {
           file_ignore_patterns = { 'package%-lock%.json' },
+          mappings = {
+            i = {
+              ['<c-j>'] = require('telescope.actions').cycle_history_next,
+              ['<c-k>'] = require('telescope.actions').cycle_history_prev,
+              ['c-enter'] = 'to_fuzzy_refine',
+            },
+          },
         },
         pickers = {
           live_grep = {
