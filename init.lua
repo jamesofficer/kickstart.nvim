@@ -62,6 +62,8 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 vim.keymap.set('n', '<S-Up>', '6k', { desc = 'Move up 6 lines' })
 vim.keymap.set('n', '<S-Down>', '6j', { desc = 'Move down 6 lines' })
+vim.keymap.set('n', 'K', '6k', { desc = 'Move up 6 lines' })
+vim.keymap.set('n', 'J', '6j', { desc = 'Move down 6 lines' })
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -87,6 +89,13 @@ vim.keymap.set('n', '<leader>xq', '<CMD>:qa!<CR>', { desc = 'Close [A]ll' })
 vim.keymap.set('n', '<leader>uc', '<CMD>:Telescope colorscheme<CR>', { desc = '[C]olorschemes' })
 
 vim.keymap.set('n', '<leader>uy', ':%y+<CR>', { desc = 'Yank entire buffer to clipboard' })
+
+vim.keymap.set({ 'n', 'v' }, '<leader>aa', '<CMD>:CodeCompanionActions<CR>', { desc = '[A]ction Palette' })
+vim.keymap.set({ 'n', 'v' }, '<leader>at', '<CMD>:CodeCompanionToggle<CR>', { desc = '[T]oggle Assistant' })
+vim.keymap.set({ 'n', 'v' }, '<leader>ac', '<CMD>:CodeCompanionChat<CR>', { desc = '[C]hat with Assitant' })
+vim.keymap.set({ 'n', 'v' }, '<leader>ai', '<CMD>:CodeCompanion<CR>', { desc = '[I]nline Assistant' })
+
+vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 
 -- Remove Keymap
 -- vim.keymap.del('n', '<D-S-N>')
@@ -173,6 +182,7 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
+        { '<leader>a', group = '[A]i Assitant' },
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]iagnostics' },
         { '<leader>r', group = '[R]ename' },
@@ -253,15 +263,15 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>ss', builtin.find_files, { desc = '[S]earch Files' })
-      vim.keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = '[S]earch Recent Files' })
-      vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = '[S]earch Select [T]elescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>se', builtin.resume, { desc = '[S]earch Resum[e]' })
+      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search [H]elp' })
+      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search [K]eymaps' })
+      vim.keymap.set('n', '<leader>ss', builtin.find_files, { desc = 'Search Files' })
+      vim.keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = 'Search [R]ecent Files' })
+      vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = 'Search Select [T]elescope' })
+      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search current [W]ord' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by [G]rep' })
+      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search [D]iagnostics' })
+      vim.keymap.set('n', '<leader>se', builtin.resume, { desc = 'Search Resum[e]' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
