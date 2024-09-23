@@ -266,12 +266,12 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search [K]eymaps' })
       vim.keymap.set('n', '<leader>ss', builtin.find_files, { desc = 'Search Files' })
-      vim.keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = 'Search [R]ecent Files' })
+      vim.keymap.set('n', '<leader>sc', builtin.oldfiles, { desc = 'Search Re[c]ent Files' })
       vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = 'Search Select [T]elescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search [D]iagnostics' })
-      vim.keymap.set('n', '<leader>se', builtin.resume, { desc = 'Search Resum[e]' })
+      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search [R]esume' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
