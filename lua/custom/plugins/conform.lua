@@ -21,13 +21,19 @@ return {
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true }
 
-        vim.lsp.buf.code_action {
-          apply = true,
-          context = {
-            only = { 'source.removeUnusedImports.ts' },
-            diagnostics = {},
-          },
-        }
+        -- Disable autoformat for files in a certain path
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if bufname:match '/node_modules/' then
+          return
+        end
+
+        -- vim.lsp.buf.code_action {
+        --   apply = true,
+        --   context = {
+        --     only = { 'source.removeUnusedImports.ts' },
+        --     diagnostics = {},
+        --   },
+        -- }
 
         return {
           timeout_ms = 500,
@@ -36,11 +42,8 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        -- python = { "isort", "black" },
       },
     },
   },
